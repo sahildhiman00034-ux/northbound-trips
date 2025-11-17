@@ -187,6 +187,12 @@ const AdminDashboard = () => {
             >
               Manage Bookings
             </button>
+            <button
+              onClick={() => navigate("/admin/users")}
+              className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Manage Users
+            </button>
           </div>
         </div>
 
