@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { ProfileDrawer } from "./ProfileDrawer";
+import { NotificationBell } from "./NotificationBell";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export const Navbar = () => {
                 <Link to="/dashboard" className="font-medium hover:text-primary">
                   Dashboard
                 </Link>
+                <NotificationBell />
                 <Button
                   variant="ghost"
                   size="icon"

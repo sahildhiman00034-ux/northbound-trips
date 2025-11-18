@@ -102,6 +102,39 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          link: string | null
+          message: string
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message: string
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message?: string
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -131,6 +164,41 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      trip_itinerary: {
+        Row: {
+          created_at: string
+          day_number: number
+          description: string
+          id: string
+          title: string
+          trip_id: string
+        }
+        Insert: {
+          created_at?: string
+          day_number: number
+          description: string
+          id?: string
+          title: string
+          trip_id: string
+        }
+        Update: {
+          created_at?: string
+          day_number?: number
+          description?: string
+          id?: string
+          title?: string
+          trip_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_itinerary_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       trip_schedules: {
         Row: {
@@ -277,11 +345,75 @@ export type Database = {
           },
         ]
       }
+      vendor_applications: {
+        Row: {
+          address: string | null
+          business_name: string
+          city: string | null
+          created_at: string
+          description: string | null
+          document_url: string | null
+          id: string
+          phone: string
+          pincode: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          state: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          business_name: string
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          document_url?: string | null
+          id?: string
+          phone: string
+          pincode?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          state?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          business_name?: string
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          document_url?: string | null
+          id?: string
+          phone?: string
+          pincode?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          state?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      create_notification: {
+        Args: {
+          _link?: string
+          _message: string
+          _title: string
+          _type?: string
+          _user_id: string
+        }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
