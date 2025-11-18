@@ -17,6 +17,9 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import TripsManagement from "./pages/admin/TripsManagement";
 import BookingsManagement from "./pages/admin/BookingsManagement";
 import UsersManagement from "./pages/admin/UsersManagement";
+import VendorsManagement from "./pages/admin/VendorsManagement";
+import VendorRegistration from "./pages/VendorRegistration";
+import VendorDashboard from "./pages/vendor/VendorDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +45,9 @@ const App = () => (
           <Route path="/admin/trips" element={<TripsManagement />} />
           <Route path="/admin/bookings" element={<BookingsManagement />} />
           <Route path="/admin/users" element={<UsersManagement />} />
+          <Route path="/admin/vendors" element={<VendorsManagement />} />
+          <Route path="/vendor/register" element={<VendorRegistration />} />
+          <Route path="/vendor/dashboard" element={<VendorDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

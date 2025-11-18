@@ -68,6 +68,23 @@ export const ProfileDrawer = ({ open, onOpenChange }: ProfileDrawerProps) => {
     },
   });
 
+  const { data: isVendor } = useQuery({
+    queryKey: ["is-vendor", session?.user?.id],
+    enabled: !!session?.user?.id,
+    queryFn: async () => {
+      if (!session?.user?.id) return false;
+
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", session.user.id)
+        .eq("role", "vendor")
+        .maybeSingle();
+
+      return !!data;
+    },
+  });
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate("/");
@@ -152,6 +169,46 @@ export const ProfileDrawer = ({ open, onOpenChange }: ProfileDrawerProps) => {
                   <span className="font-medium text-primary">Control Panel</span>
                 </div>
                 <ChevronRight className="h-5 w-5 text-primary" />
+              </button>
+              <Separator />
+            </>
+          )}
+
+          {/* Vendor Dashboard */}
+          {isVendor && !isAdmin && (
+            <>
+              <button
+                onClick={() => {
+                  navigate("/vendor/dashboard");
+                  onOpenChange(false);
+                }}
+                className="flex w-full items-center justify-between rounded-lg bg-accent/50 p-4 transition-colors hover:bg-accent"
+              >
+                <div className="flex items-center space-x-3">
+                  <Shield className="h-5 w-5 text-foreground" />
+                  <span className="font-medium">Vendor Dashboard</span>
+                </div>
+                <ChevronRight className="h-5 w-5" />
+              </button>
+              <Separator />
+            </>
+          )}
+
+          {/* Become a Vendor */}
+          {!isVendor && !isAdmin && (
+            <>
+              <button
+                onClick={() => {
+                  navigate("/vendor/register");
+                  onOpenChange(false);
+                }}
+                className="flex w-full items-center justify-between rounded-lg border-2 border-dashed border-muted-foreground/30 p-4 transition-colors hover:border-primary hover:bg-primary/5"
+              >
+                <div className="flex items-center space-x-3">
+                  <Shield className="h-5 w-5 text-muted-foreground" />
+                  <span className="font-medium text-muted-foreground">Become a Vendor</span>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground" />
               </button>
               <Separator />
             </>
