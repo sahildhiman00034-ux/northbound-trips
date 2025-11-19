@@ -54,8 +54,14 @@ const Auth = () => {
 
       toast({
         title: "Account created!",
-        description: "You can now sign in with your credentials.",
+        description: "Please check if you're logged in. If not, try signing in now.",
       });
+      
+      // Check if user is automatically signed in
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/");
+      }
     } catch (error: any) {
       toast({
         variant: "destructive",
